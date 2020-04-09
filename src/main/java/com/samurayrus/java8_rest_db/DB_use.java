@@ -190,42 +190,51 @@ public class DB_use {
             int sc=0; //Прибыль
             
             String sql1, sql2;
-            sql1="SELECT * FROM PURCHASE where NAME =? AND DATE <=?::date";
-            sql2= "SELECT * FROM DEMAND where NAME =? AND DATE <=?::date";
+            //sql1="SELECT * FROM PURCHASE where NAME =? AND DATE <=?::date";
+           // sql2= "SELECT * FROM DEMAND where NAME =? AND DATE <=?::date";   //Вот от этого я ушел и сделал одну команду ниже, чтобы расчеты оставить на бд
             
+          //  sql1= "SELECT SUM(cost*qua) FROM DEMAND where NAME =? AND DATE <=?::date ";
+           // sql2= "SELECT SUM(cost*qua) FROM PURCHASE where NAME =? AND DATE <=?::date ";
+            sql1 = "SELECT dem.s1-pur.s2 FROM (SELECT SUM(qua*cost) s1 FROM demand where name =? AND DATE <=?::date)"+
+                    " dem, (SELECT SUM(qua*cost) s2 FROM purchase where name =? AND DATE <=?::date) pur;";
             System.out.println("--DB_check_time начал проверку");
-            
+
             try{
-            sc += Integer.parseInt(DB_GetSales_sql(sql2, date, name));
-            sc -= Integer.parseInt(DB_GetSales_sql(sql1, date, name));
+            sc=0;
+            System.out.println("--DB_check_PURC НАШЕЛ "+ 2);
+            sc += DB_GetSales_sql(sql1, date, name);
+                System.out.println("com.samurayrus.java8_rest_db.DB_use.DB_check_time()"+ sc);
             }
             catch(NumberFormatException ex) {return "ERROR";}
-
+                
            return String.valueOf(sc);
       }
        
 
-       private static String DB_GetSales_sql(String sql, LocalDate date, String name)  //Разбил на две части
+       private static Integer DB_GetSales_sql(String sql, LocalDate date, String name)  //Разбил на две части
       {
         try { 
             int sc=0;
             ResultSet rs;
-            
+            System.out.println("--DB_check_PURC НАШЕЛ "+ 3);
             Connection con= DB_connection();
             PreparedStatement ps = con.prepareStatement(
             sql);
             
-            if(ps==null) {return "PSQ_EX";}
-            
+            if(ps==null) {return 22;}
+            System.out.println("--DB_check_PURC НАШЕЛ "+ 4);
             java.sql.Date sqlDate = java.sql.Date.valueOf( date);
                
             ps.setString(1, name);
             ps.setDate(2, sqlDate);
-       
+           ps.setString(3, name);
+            ps.setDate(4, sqlDate);
+       System.out.println("--DB_check_PURC НАШЕЛ "+ 5);
             rs = ps.executeQuery();
         
             while ( rs.next() ) {
-            sc+=rs.getInt("QUA")*rs.getInt("COST");
+            //sc+=rs.getInt("QUA")*rs.getInt("COST");
+            sc+=rs.getInt(1);
             System.out.println("--DB_check_PURC НАШЕЛ "+ sc);
             }
             
@@ -233,8 +242,8 @@ public class DB_use {
         rs.close();
 
 
-        return String.valueOf(sc);
+        return sc;
         }
-          catch (SQLException ex2) {return "ERR";}
+          catch (SQLException ex2) {return 11;}
        }
 }
