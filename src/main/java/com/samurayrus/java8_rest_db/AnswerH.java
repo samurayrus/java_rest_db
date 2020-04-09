@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AnswerH {
-       public static void HttpAnswer(HttpExchange exchange,String respText ) //Антидублирование кода
+       public void HttpAnswer(HttpExchange exchange,String respText ) //Антидублирование кода
    {
        try 
        {
@@ -17,6 +17,7 @@ public class AnswerH {
            //Нужное мне
            System.out.println(exchange.getRequestURI() + " URI");
            System.out.println(exchange.getRequestURI().getRawQuery() + " Query");
+           System.out.println("Отослан ответ: " + respText);
            //
            output.flush();
            exchange.close();

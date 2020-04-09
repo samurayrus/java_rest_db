@@ -1,4 +1,6 @@
 package com.samurayrus.java8_rest_db;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import java.util.ArrayList;
 
@@ -14,7 +16,8 @@ public class Context{
     }
     
     public void context()
-    {
+    {       
+    
             server.createContext("/api"+name, (exchange -> {
                 
             String post;
@@ -24,6 +27,7 @@ public class Context{
            //_____________
             post = exchange.getRequestMethod();
             respText = "111";
+            
            if(param.equals(post)){
                System.out.println("Запрос "+param);
                 s = exchange.getRequestURI().getRawQuery();
@@ -33,7 +37,7 @@ public class Context{
                switch(name)
                {
                    case "/newproduct": 
-                       if(parS.length!=1) respText="Null Param"; else  //
+                       if(parS.length!=1) respText="Null Param"; else  //Проверка на соответствие действия количеству переменных
                        respText=postNewproduct.newproduct(parS[0]);
                        break;
                    case "/purchase":
@@ -46,7 +50,11 @@ public class Context{
                        break;
                    case "/salesreport":
                        if(parS.length!=2) respText="Null Param"; else 
-                       respText=GetSales.Sales(parS[0],parS[1]);
+                       //respText=GetSales.Sales(parS[0],parS[1]); вариант со static
+                       {
+                       GetSales getSales = new GetSales(parS[0],parS[1]);
+                       respText = getSales.Sales();
+                       }
                        break;
                        default: respText="error name context "+ Context.class.getName(); break;
                }}
@@ -56,7 +64,9 @@ public class Context{
             System.out.println("Ошибочный формат запроса...");
             respText="ERROR. Use only '"+param+"' for this";
            }
-               AnswerH.HttpAnswer(exchange, respText);
+           
+           AnswerH answerH = new AnswerH();
+           answerH.HttpAnswer(exchange, respText); //Тут надо подумать
        }));
     }
 }
