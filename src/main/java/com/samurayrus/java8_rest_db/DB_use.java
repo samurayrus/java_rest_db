@@ -98,7 +98,7 @@ public class DB_use {
           
        }
 
-       static String DB_NewProduct(String name)  //Создание нового товара
+       static String DB_NewProduct(String name)  //Добавление нового животного в каталог
       {
           //
         try {  
@@ -118,14 +118,24 @@ public class DB_use {
           catch (SQLException ex2) {System.out.println("-ERROR ");return "ERROR_SQL ";}
       
       }
-       static String DB_PurDem(String sql, String name, int QUA, int Cost, LocalDate date)  //Запись продажа или закупка.
+       static String DB_PurDem(String metS, String name, int QUA, int Cost, LocalDate date)  //Запись продажа или закупка.
       {
+           String sql="Err";
           //
         try {  
             
-            Connection con= DB_connection();
+            Connection con;
+            PreparedStatement ps;
             
-            PreparedStatement ps = con.prepareStatement(
+            if(metS.equals("DEMAND"))
+            { sql="INSERT INTO DEMAND (NAME, QUA, COST, DATE) VALUES (?,?,?,?)";}
+            
+            if(metS.equals("PURCHASE"))
+            { sql="INSERT INTO PURCHASE (NAME, QUA, COST, DATE) VALUES (?,?,?,?)";}
+            
+            con= DB_connection();
+            
+            ps = con.prepareStatement(
             sql);
             ps.setString(1, name);
             ps.setInt(2, QUA);
@@ -134,7 +144,7 @@ public class DB_use {
             ps.setDate(4, sqlDate);
             ps.executeUpdate();
             
-           // "INSERT INTO "+metS+" (NAME, QUA, COST, DATE) VALUES ('"+name+"',"+QUA+","+Cost+",'"+retDate+"');"
+           
            
             System.out.println("--Конец создания таблиц Проц 2");
             return "Complete";

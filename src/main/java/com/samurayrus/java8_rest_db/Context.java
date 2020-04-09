@@ -28,7 +28,7 @@ public class Context{
             post = exchange.getRequestMethod();
             respText = "111";
             
-           if(param.equals(post)){
+           if(param.equals(post)){       //Соответствие параметру
                System.out.println("Запрос "+param);
                 s = exchange.getRequestURI().getRawQuery();
                 parS=ParserS.parser(s);
@@ -40,19 +40,21 @@ public class Context{
                        if(parS.length!=1) respText="Null Param"; else  //Проверка на соответствие действия количеству переменных
                        respText=postNewproduct.newproduct(parS[0]);
                        break;
+                       
                    case "/purchase":
                        if(parS.length!=4) respText="Null Param"; else 
-                       respText=PostDemand_Purchase.purchase(parS[0],parS[1],parS[2],parS[3], "Other");
+                       respText=PostDemand_Purchase.purchase(parS[0],parS[1],parS[2],parS[3], "PURCHASE");
                        break;
+                       
                    case "/demand":
                        if(parS.length!=4) respText="Null Param"; else 
                        respText=PostDemand_Purchase.purchase(parS[0],parS[1],parS[2],parS[3], "DEMAND");
                        break;
+                       
                    case "/salesreport":
                        if(parS.length!=2) respText="Null Param"; else 
-                       //respText=GetSales.Sales(parS[0],parS[1]); вариант со static
                        {
-                       GetSales getSales = new GetSales(parS[0],parS[1]);
+                       GetSales getSales = new GetSales(parS[0],parS[1]); //вариант с nonStatic
                        respText = getSales.Sales();
                        }
                        break;

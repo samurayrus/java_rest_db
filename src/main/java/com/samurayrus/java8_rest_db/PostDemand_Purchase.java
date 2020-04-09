@@ -35,14 +35,8 @@ import java.time.format.DateTimeFormatter;
                  
                 if(DB_use.DB_check_name(name)==0){System.out.println("--"+metS+" нет такого");
                 return "ERROR or cant find this product";}
-                
-                
-                if(metS.equals("DEMAND"))
-                { sql="INSERT INTO DEMAND (NAME, QUA, COST, DATE) VALUES (?,?,?,?)";}
-                else
-                { sql="INSERT INTO PURCHASE (NAME, QUA, COST, DATE) VALUES (?,?,?,?)";}
-                
-                return DB_use.DB_PurDem(sql, name, Integer.parseInt(QUA), Integer.parseInt(Cost), dateD);
+
+                return DB_use.DB_PurDem(metS, name, Integer.parseInt(QUA), Integer.parseInt(Cost), dateD);
             }
             catch(java.lang.NumberFormatException e){System.out.println("NumberFormatException");
             return "Error - Not Int";}
