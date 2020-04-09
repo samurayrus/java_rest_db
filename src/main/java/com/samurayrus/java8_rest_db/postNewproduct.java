@@ -8,9 +8,8 @@ package com.samurayrus.java8_rest_db;
  class postNewproduct {
      static String newproduct(String name)
     {
-                System.out.println("--Парсер получил Newproduct");
                 
-                if(name==null || name == "")
+                if(name==null || name == "")  //Все проверки нужно перенести в парсер
                 return "Error. Empty name";
                 
                 if(DB_use.DB_check_name(name)>0){System.out.println("--Newproduct ошибка");
