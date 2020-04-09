@@ -15,15 +15,19 @@ public class Context{
     
     public void context()
     {
-    
-               server.createContext("/api"+name, (exchange -> {
-       //_____________
-           String post = exchange.getRequestMethod();
-           String respText = "111";
+            server.createContext("/api"+name, (exchange -> {
+                
+            String post;
+            String respText;
+            String s;
+            String [] parS;
+           //_____________
+            post = exchange.getRequestMethod();
+            respText = "111";
            if(param.equals(post)){
                System.out.println("Запрос "+param);
-               String s = exchange.getRequestURI().getRawQuery();
-               String [] parS=ParserS.parser(s);
+                s = exchange.getRequestURI().getRawQuery();
+                parS=ParserS.parser(s);
                if(parS==null) {respText="Error_Format";}
                else{
                switch(name)

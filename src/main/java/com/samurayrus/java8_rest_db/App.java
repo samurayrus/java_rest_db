@@ -41,7 +41,7 @@ public class App {
        //--------------------------
        server.setExecutor(null); 
        server.start();
-       //DB_use.DB_create_Tables();
+       //DB_use.DB_create_Tables(); //Создание таблиц
    }
    
    

@@ -16,12 +16,14 @@ import java.time.LocalDate;
        
      static String Sales(String name, String dateS)
     {
+        String[] datePars;
+        LocalDate dateD;
         
         if(name==null || "".equals(name) ||dateS==null )
         return "Error. Empty name";
         
-        String[] datePars=dateS.split("-");  //Перенести в парсер для даты
-        LocalDate dateD = LocalDate.of(Integer.parseInt(datePars[2]),Integer.parseInt(datePars[1]) , Integer.parseInt(datePars[0]));
+        datePars=dateS.split("-");  //Перенести в парсер для даты
+        dateD = LocalDate.of(Integer.parseInt(datePars[2]),Integer.parseInt(datePars[1]) , Integer.parseInt(datePars[0]));
         
         return DB_use.DB_check_time(dateD, name); 
     }

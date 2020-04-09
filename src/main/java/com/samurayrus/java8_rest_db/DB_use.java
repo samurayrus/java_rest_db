@@ -15,10 +15,7 @@ public class DB_use {
       static final String USER = "postgres";
       static final String PASS = "1234";
       
-      
 
-        
-        
       public static String DB_create_Tables()  //Создание таблиц. Можно вызвать
       {
           String sql1, sql2, sql3;
@@ -64,24 +61,25 @@ public class DB_use {
       }
       
       //_________________
-      private static String DB_Upd(String sql)  //Выполнение sql запроса на создание таблиц
+      private static String DB_Upd(String sql)  //Выполнение sql запроса на создание таблиц (Только)
       {
-          //
         try {  
+            Connection con;
+            Statement statement;
             if(sql=="" || sql==null) return "Empty param";
-            Connection con= DB_connection();
             
-        Statement statement = con.createStatement();
+            con= DB_connection();
+            statement = con.createStatement();
             
-        if(statement==null) {return "PSQ_EX";}
+            if(statement==null) {return "PSQ_EX";}
         
-        statement.executeUpdate(sql);
+             statement.executeUpdate(sql);
 
-        statement.close();
-            System.out.println("--Конец создания таблиц Проц 2");
+             statement.close();
+             System.out.println("--Конец создания таблиц");
             return "Complete";
         } 
-          catch (SQLException ex2) {System.out.println("-ERROR ");return "ERROR_SQL";}
+        catch (SQLException ex2) {System.out.println("-ERROR ");return "ERROR_SQL";}
       
       }
       
