@@ -16,6 +16,6 @@
  
  BD_use отвечает за все операции с базой данных.
  
- В ней есть вот эта великолепная команда: "SELECT dem.s1-pur.s2 FROM (SELECT SUM(qua*cost) s1 FROM demand where name =? AND DATE <=?::date) dem, (SELECT SUM(qua*cost) s2 FROM purchase where name =? AND DATE <=?::date) pur;", которая вычисляет прибыль по товару (животному) до определенной даты. qua -количество проданных, cost - цена.
+ В ней есть вот эта великолепная команда: "SELECT dem.s1-pur.s2 FROM (SELECT SUM(qua*cost) s1 FROM demand where name =? AND DATE <=?::date) dem, (SELECT SUM(qua*cost) s2 FROM purchase where name =? AND DATE <=?::date) pur;", которая вычисляет прибыль по товару (животному) до определенной даты из двух таблиц. qua -количество проданных, cost - цена.
  _______
 HttpServer, PostgreSQL;
