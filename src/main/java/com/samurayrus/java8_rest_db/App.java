@@ -33,7 +33,7 @@ public class App {
        
        for(String[] g: urllist)
        {
-        Context con = new Context(server,g[0],g[1], Integer.valueOf(g[2]));
+        Context con = new Context(server,g[0],g[1], Integer.valueOf(g[2])); //try
         con.context();
            System.out.println("Created Context" + g[0] + "With " + g[1]);
        }

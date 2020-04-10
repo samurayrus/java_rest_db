@@ -69,13 +69,4 @@ public class Context{
        }));
     }
     
-    void con_method(String a)
-    {
-    
-    }
-    void con_method(String a, String b)
-    {
-    
-    }
-    
 }
