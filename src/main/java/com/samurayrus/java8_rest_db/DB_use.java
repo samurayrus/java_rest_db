@@ -201,9 +201,7 @@ public class DB_use {
 
             try{
             sc=0;
-            System.out.println("--DB_check_PURC НАШЕЛ "+ 2);
             sc += DB_GetSales_sql(sql1, date, name);
-                System.out.println("com.samurayrus.java8_rest_db.DB_use.DB_check_time()"+ sc);
             }
             catch(NumberFormatException ex) {return "ERROR";}
                 
@@ -216,26 +214,22 @@ public class DB_use {
         try { 
             int sc=0;
             ResultSet rs;
-            System.out.println("--DB_check_PURC НАШЕЛ "+ 3);
             Connection con= DB_connection();
             PreparedStatement ps = con.prepareStatement(
             sql);
             
             if(ps==null) {return 22;}
-            System.out.println("--DB_check_PURC НАШЕЛ "+ 4);
             java.sql.Date sqlDate = java.sql.Date.valueOf( date);
                
             ps.setString(1, name);
             ps.setDate(2, sqlDate);
            ps.setString(3, name);
             ps.setDate(4, sqlDate);
-       System.out.println("--DB_check_PURC НАШЕЛ "+ 5);
             rs = ps.executeQuery();
         
             while ( rs.next() ) {
             //sc+=rs.getInt("QUA")*rs.getInt("COST");
             sc+=rs.getInt(1);
-            System.out.println("--DB_check_PURC НАШЕЛ "+ sc);
             }
             
         ps.close();

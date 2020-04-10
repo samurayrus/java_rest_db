@@ -34,7 +34,7 @@ public class ParserS {
         {
             //Проверка чисел
                        
-        try {int ark2 = Integer.valueOf(ent); if(ark2>0) return true; return false;}
+        try {int ark2 = Integer.valueOf(ent); if(ark2>0) return true; else return false;}
         catch(java.lang.NumberFormatException e){System.out.println(e +" StrToInt "+ent); return false;}
        
         }

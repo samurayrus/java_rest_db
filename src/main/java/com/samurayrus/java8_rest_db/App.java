@@ -26,14 +26,14 @@ public class App {
        //ContextCreator
        //--------------------------
        ArrayList<String[]> urllist = new ArrayList<>(); 
-       urllist.add(new String[]{"/newproduct","POST"});
-       urllist.add(new String[]{"/purchase","POST"});
-       urllist.add(new String[]{"/demand","POST"});
-       urllist.add(new String[]{"/salesreport","GET"});
+       urllist.add(new String[]{"/newproduct","POST", "1"});
+       urllist.add(new String[]{"/purchase","POST", "4"});
+       urllist.add(new String[]{"/demand","POST", "4"});
+       urllist.add(new String[]{"/salesreport","GET", "2"});
        
        for(String[] g: urllist)
        {
-        Context con = new Context(server,g[0],g[1]);
+        Context con = new Context(server,g[0],g[1], Integer.valueOf(g[2]));
         con.context();
            System.out.println("Created Context" + g[0] + "With " + g[1]);
        }

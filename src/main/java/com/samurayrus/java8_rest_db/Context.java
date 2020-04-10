@@ -7,12 +7,14 @@ import java.util.ArrayList;
 public class Context{
     private HttpServer server;
     private String name, param;
+    int num; //Количество частей в запросе
     
-    public Context(HttpServer server, String name, String param)
+    public Context(HttpServer server, String name, String param, int num)
     {
     this.server=server;
     this.name=name;
     this.param=param;
+    this.num=num;
     }
     
     public void context()
@@ -32,32 +34,27 @@ public class Context{
                System.out.println("Запрос "+param);
                 s = exchange.getRequestURI().getRawQuery();
                 parS=ParserS.parser(s);
-               if(parS==null) {respText="Error_Format";}
+               if(parS==null || parS.length!=num) {respText="Error_Format";} //Проверка на соответствие действия количеству переменных
                else{
                switch(name)
                {
                    case "/newproduct": 
-                       if(parS.length!=1) respText="Null Param"; else  //Проверка на соответствие действия количеству переменных
-                       respText=postNewproduct.newproduct(parS[0]);
+                      respText=postNewproduct.newproduct(parS[0]);
                        break;
                        
                    case "/purchase":
-                       if(parS.length!=4) respText="Null Param"; else 
                        respText=PostDemand_Purchase.purchase(parS[0],parS[1],parS[2],parS[3], "PURCHASE");
                        break;
                        
                    case "/demand":
-                       if(parS.length!=4) respText="Null Param"; else 
                        respText=PostDemand_Purchase.purchase(parS[0],parS[1],parS[2],parS[3], "DEMAND");
                        break;
                        
                    case "/salesreport":
-                       if(parS.length!=2) respText="Null Param"; else 
-                       {
                        GetSales getSales = new GetSales(parS[0],parS[1]); //вариант с nonStatic
                        respText = getSales.Sales();
-                       }
                        break;
+                       
                        default: respText="error name context "+ Context.class.getName(); break;
                }}
                
@@ -71,4 +68,14 @@ public class Context{
            answerH.HttpAnswer(exchange, respText); //Тут надо подумать
        }));
     }
+    
+    void con_method(String a)
+    {
+    
+    }
+    void con_method(String a, String b)
+    {
+    
+    }
+    
 }
