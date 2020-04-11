@@ -238,6 +238,6 @@ public class DB_use {
 
         return sc;
         }
-          catch (SQLException ex2) {return 11;}
+          catch (SQLException ex2) {return null;}
        }
 }
